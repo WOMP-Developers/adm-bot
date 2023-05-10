@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import discord
 import os
 import threading
@@ -8,6 +10,9 @@ from adm.commands import create_summary, create_system_graph, refresh_data
 from adm.configuration import Configuration
 from adm.database import Database
 from auto_refresh import threaded_auto_refresh 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True
