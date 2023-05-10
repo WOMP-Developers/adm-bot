@@ -13,12 +13,13 @@ def create_system_graph(database, system_name):
     o4t = database.select_system_history(system_name, 5)
 
     if plot_system_adm(o4t):
-        plot_save(system_name)
+        return plot_save(system_name)
+    
+    return None
 
-def print_summary(database):
+def create_summary(database, file_name):
     system_adms = database.select_systems()
     
-
     system_adms.sort_values(by='adm', inplace=True, ascending=False)
     
     s_tier = system_adms.loc[system_adms['tier'] == 's_tier']
@@ -39,13 +40,7 @@ def print_summary(database):
 
     generated_at = database.select_most_recent_row()
 
+    with open(file_name, 'w', encoding='UTF-8') as f:
+        f.write(table)
 
-    summary = f"""
-    ```
-    {table}
-    ```
-
-    Generated at: {generated_at['created_at'][0]}
-    """
-
-    print(summary)
+    return f"ADM @ {generated_at['created_at'][0]}"
