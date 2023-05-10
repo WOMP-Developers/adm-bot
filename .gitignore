@@ -54,3 +54,6 @@ docs/_build/
 
 # Configuration
 .env
+
+# DB
+adm-data.sqlite
