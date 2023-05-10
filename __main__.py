@@ -1,8 +1,10 @@
 import sys
+from configuration import Configuration
 
 def main() -> int:
-    print('Hello, World!')
+    configuration = Configuration()
+
     return 0
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main()) 
