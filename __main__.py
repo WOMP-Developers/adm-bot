@@ -2,7 +2,6 @@ import sys
 from adm.commands import print_summary, refresh_data
 from adm.configuration import Configuration
 from adm.database import Database
-from datetime import datetime, timezone
 
 def main() -> int:
     configuration = Configuration()
