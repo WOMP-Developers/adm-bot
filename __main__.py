@@ -1,5 +1,5 @@
 import sys
-from adm.commands import print_summary, refresh_data
+from adm.commands import refresh_data
 from adm.configuration import Configuration
 from adm.database import Database
 
@@ -8,7 +8,6 @@ def main() -> int:
     database = Database()
     
     refresh_data(configuration, database)
-    print_summary(database)
 
     return 0
 
