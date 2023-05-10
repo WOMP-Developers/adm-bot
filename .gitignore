@@ -51,3 +51,6 @@ docs/_build/
 
 # Environment
 .venv
+
+# Configuration
+.env
