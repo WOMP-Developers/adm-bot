@@ -4,9 +4,16 @@ This is a discord bot which will collect alliance system ADM's daily and provide
 
 ## Quick Start
 
-`cp .env.example .env` (edit variables in .env)
-`pip install -r requirements.txt`
-`python bot.py`
+```shell
+# Edit variables in .env
+cp .env.example .env
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run bot
+python bot.py
+```
 
 ## Commands
 

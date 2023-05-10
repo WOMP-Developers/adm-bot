@@ -1,7 +1,12 @@
+#!/usr/bin/env python
+
 import sys
 from adm.commands import refresh_data
 from adm.configuration import Configuration
 from adm.database import Database
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main() -> int:
     configuration = Configuration()
