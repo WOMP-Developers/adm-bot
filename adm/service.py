@@ -16,23 +16,10 @@ def get_alliance_structures(structures, alliance_id):
 
     return df[df['alliance_id'] == alliance_id]
 
-def get_systems(ids):
-    names = universe_names(ids)
-    systems = pd.DataFrame.from_dict(names)
-
-    systems.drop(columns=['category'], inplace=True)
-    systems.set_index('id', inplace=True)
-
-    return systems
-
 def get_system_adms(alliance_id):
     structures = sovereignty_structures()
-    structures = get_alliance_structures(structures, alliance_id)
+    system_adms = get_alliance_structures(structures, alliance_id)
 
-    system_ids = structures['solar_system_id'].unique()
-    systems = get_systems(system_ids.tolist())
-
-    system_adms = structures.join(systems, on='solar_system_id', how='left')
     system_adms.drop_duplicates(inplace=True)
 
     drop_columns = ['alliance_id']
