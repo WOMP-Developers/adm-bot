@@ -4,7 +4,7 @@ from adm.service import get_system_adms
 from tabulate import tabulate
 import pandas as pd
 
-def refresh_data(configuration, database):
+def update_adm_data(configuration, database):
     system_adms = get_system_adms(configuration.alliance_id)
 
     database.insert_systems(system_adms)
@@ -29,11 +29,11 @@ def create_summary(database, file_name):
     d_tier = system_adms.loc[system_adms['tier'] == 'd_tier']
 
     sorted_summary = [
-        {'Tier': 'S', 'Systems': '\n'.join(s_tier['name']), 'ADM': '\n'.join(s_tier['adm'].map(lambda v: str(v)))},
-        {'Tier': 'A', 'Systems': '\n'.join(a_tier['name']), 'ADM': '\n'.join(a_tier['adm'].map(lambda v: str(v)))},
-        {'Tier': 'B', 'Systems': '\n'.join(b_tier['name']), 'ADM': '\n'.join(b_tier['adm'].map(lambda v: str(v)))},
-        {'Tier': 'C', 'Systems': '\n'.join(c_tier['name']), 'ADM': '\n'.join(c_tier['adm'].map(lambda v: str(v)))},
-        {'Tier': 'D', 'Systems': '\n'.join(d_tier['name']), 'ADM': '\n'.join(d_tier['adm'].map(lambda v: str(v)))}
+        {'Tier': 'S', 'Systems': '\n'.join(s_tier['solarSystemName']), 'ADM': '\n'.join(s_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(s_tier['constellationName']), 'Region': '\n'.join(s_tier['regionName'])},
+        {'Tier': 'A', 'Systems': '\n'.join(a_tier['solarSystemName']), 'ADM': '\n'.join(a_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(a_tier['constellationName']), 'Region': '\n'.join(a_tier['regionName'])},
+        {'Tier': 'B', 'Systems': '\n'.join(b_tier['solarSystemName']), 'ADM': '\n'.join(b_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(b_tier['constellationName']), 'Region': '\n'.join(b_tier['regionName'])},
+        {'Tier': 'C', 'Systems': '\n'.join(c_tier['solarSystemName']), 'ADM': '\n'.join(c_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(c_tier['constellationName']), 'Region': '\n'.join(c_tier['regionName'])},
+        {'Tier': 'D', 'Systems': '\n'.join(d_tier['solarSystemName']), 'ADM': '\n'.join(d_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(d_tier['constellationName']), 'Region': '\n'.join(d_tier['regionName'])}
     ]
 
     table = tabulate(sorted_summary, showindex=False, headers='keys', tablefmt='fancy_grid',numalign='left',stralign='center')
@@ -43,4 +43,14 @@ def create_summary(database, file_name):
     with open(file_name, 'w', encoding='UTF-8') as f:
         f.write(table)
 
-    return f"ADM @ {generated_at['created_at'][0]}"
+    return generated_at['created_at'][0]
+
+def create_spreadsheet(database, filename):
+    system_adms = database.select_systems()
+    system_adms.sort_values(by='adm', inplace=True, ascending=False)
+
+    system_adms.to_csv(filename, index=False, columns=['system_id','adm','tier','created_at','solarSystemName','constellationName','regionName'])
+
+    generated_at = database.select_most_recent_row()
+
+    return generated_at['created_at'][0]

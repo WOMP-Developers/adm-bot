@@ -18,6 +18,7 @@ python bot.py
 ## Commands
 
 - `!adm` - send a summary of ADM's
+- `!adm csv` - send a csv of ADM's
 - `!adm <system>` - send a graph showing system ADM over time
 - `!adm refresh` - manually refresh the data
 

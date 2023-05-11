@@ -1,16 +1,21 @@
 #!/usr/bin/env python
 
+from zoneinfo import ZoneInfo
 import discord
 import os
 import threading
 import signal
 import sys
+import time
 from discord.ext import commands
-from adm.commands import create_summary, create_system_graph, refresh_data
+from adm.commands import create_spreadsheet, create_summary, create_system_graph, update_adm_data
 from adm.configuration import Configuration
 from adm.database import Database
+from adm.static_data import update_static_data
 from auto_refresh import threaded_auto_refresh 
 from dotenv import load_dotenv
+from datetime import datetime
+from dateutil.tz import *
 
 load_dotenv()
 
@@ -24,6 +29,15 @@ database = Database()
 
 interrupt_event = threading.Event()
 
+def convert_to_local_timestamp(date):
+    generated_utc_date = datetime.fromisoformat(date)
+    generated_utc_date = generated_utc_date.replace(tzinfo=tzutc())
+
+    generated_local_date = generated_utc_date.astimezone(tzlocal())
+
+    return int(time.mktime(generated_local_date.timetuple()))
+
+
 async def send_system_graph(ctx, system_name):
     file_path = create_system_graph(database, system_name)
     if file_path:
@@ -35,14 +49,25 @@ async def send_system_graph(ctx, system_name):
 
 async def send_summary(ctx):
     file_name = "adm_summary.txt"
-    title = create_summary(database, file_name)
+    generated_at = create_summary(database, file_name)
+    timestamp = convert_to_local_timestamp(generated_at)
 
     if os.path.isfile(file_name):
-        await ctx.send(file=discord.File(file_name), content=title)
+        await ctx.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
+        os.remove(file_name)
+
+async def send_csv(ctx):
+    file_name = "adm_summary.csv"
+    generated_at = create_spreadsheet(database, file_name)
+    timestamp = convert_to_local_timestamp(generated_at)
+
+    if os.path.isfile(file_name):
+        await ctx.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
         os.remove(file_name)
 
 async def refresh(ctx):
-    refresh_data(configuration, database)
+    await ctx.send("Refreshing ADM data... 🚧")
+    update_adm_data(configuration, database)
     await ctx.send("ADM data manually refreshed 🚀")
 
 @bot.command(name='adm')
@@ -54,6 +79,8 @@ async def command_adm(ctx, *args):
     for arg in args:
         if arg == 'refresh':
             await refresh(ctx)
+        elif arg == 'csv':
+            await send_csv(ctx)
         else:
             await send_system_graph(ctx, arg)
 
@@ -64,7 +91,8 @@ def signal_handler(sig, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 
-refresh_data(configuration, database)
-threaded_auto_refresh(interrupt_event, configuration, database)
+update_static_data(database)
+update_adm_data(configuration, database)
+threaded_auto_refresh(interrupt_event)
 
 bot.run(configuration.discord_token)
