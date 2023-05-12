@@ -26,6 +26,8 @@ intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 configuration = Configuration()
+print(configuration)
+
 database = Database()
 
 interrupt_event = threading.Event()
@@ -39,55 +41,55 @@ def convert_to_local_timestamp(date):
     return int(time.mktime(generated_local_date.timetuple()))
 
 
-async def send_system_graph(ctx, system_name):
+async def send_system_graph(user, system_name):
     file_path = create_system_graph(database, system_name)
     if file_path:
-        await ctx.send(file=discord.File(file_path), content=f"{system_name}: Historic Data")
+        await user.send(file=discord.File(file_path), content=f"{system_name}: Historic Data")
         os.remove(file_path)
 
     else:
-        await ctx.send(f"{system_name}: No data (╯°□°）╯︵ ┻━┻")
+        await user.send(f"{system_name}: No data (╯°□°）╯︵ ┻━┻")
 
-async def send_summary(ctx):
+async def send_summary(user):
     file_name = "adm_summary.txt"
     generated_at = create_summary(database, file_name)
     timestamp = convert_to_local_timestamp(generated_at)
 
     if os.path.isfile(file_name):
-        await ctx.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
+        await user.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
         os.remove(file_name)
 
-async def send_csv(ctx):
+async def send_csv(user):
     file_name = "adm_summary.csv"
     generated_at = create_spreadsheet(database, file_name)
     timestamp = convert_to_local_timestamp(generated_at)
 
     if os.path.isfile(file_name):
-        await ctx.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
+        await user.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
         os.remove(file_name)
 
 async def refresh(ctx):
     await ctx.send("Refreshing ADM data... 🚧")
     update_adm_data(configuration, database)
-    await ctx.send("ADM data manually refreshed 🚀")
+    await ctx.send("ADM data manually refreshed 🦀")
 
-async def update_adm(ctx, system_name, adm: float):
+async def update_adm(user, system_name, adm: float):
     system = database.select_system_with_name(system_name)
     if system.empty:
-        await ctx.send(f"No system with name: {system_name}")
+        await user.send(f"No system with name: {system_name}")
         return
 
     adm = float(adm)
 
     if adm <= 0.0 or adm > 6.0:
-        await ctx.send(f"Invalid ADM: {adm} (1.0-6.0 valid)")
+        await user.send(f"Invalid ADM: {adm} (1.0-6.0 valid)")
         return
     
     insert_systems = create_system_adm(system, adm)
 
     database.insert_systems(insert_systems)
 
-    await ctx.send(f"Manually updated {system_name} ADM to {adm}")
+    await user.send(f"Manually updated {system_name} ADM to {adm}")
 
 @bot.command(name='adm')
 async def command_adm(ctx, *args):
@@ -103,9 +105,9 @@ async def command_adm(ctx, *args):
         if arg == 'refresh':
             await refresh(ctx)
         elif arg == 'csv':
-            await send_csv(ctx)
+            await send_csv(ctx.author)
         else:
-            await send_system_graph(ctx, arg)
+            await send_system_graph(ctx.author, arg)
 
 def signal_handler(sig, frame):
     interrupt_event.set()
