@@ -16,6 +16,15 @@ def get_alliance_structures(structures, alliance_id):
 
     return df[df['alliance_id'] == alliance_id]
 
+def create_system_adm(system, adm):
+    system_adm = pd.DataFrame(columns=['system_id', 'adm'])
+    system_adm['system_id'] = system['solarSystemID']
+    system_adm['adm'] = [ adm ]
+
+    tier_list(system_adm)
+
+    return system_adm
+
 def get_system_adms(alliance_id):
     structures = sovereignty_structures()
     system_adms = get_alliance_structures(structures, alliance_id)

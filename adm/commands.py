@@ -10,9 +10,9 @@ def update_adm_data(configuration, database):
     database.insert_systems(system_adms)
 
 def create_system_graph(database, system_name):
-    o4t = database.select_system_history(system_name, 5)
+    system_history = database.select_system_history(system_name, 10)
 
-    if plot_system_adm(o4t):
+    if plot_system_adm(system_history):
         return plot_save(system_name)
     
     return None
