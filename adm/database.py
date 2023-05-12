@@ -40,6 +40,9 @@ class Database:
 
         self.conn.commit()
 
+    def select_system_with_name(self, system_name):
+        return pd.read_sql_query("SELECT * FROM map WHERE solarSystemName = ?", self.conn, params=[system_name])
+
     def select_most_recent_row(self):
         return pd.read_sql_query("SELECT created_at FROM systems ORDER BY created_at DESC LIMIT 1", self.conn)
 
@@ -51,4 +54,4 @@ class Database:
         """, self.conn)
     
     def select_system_history(self, system, limit):
-        return pd.read_sql_query("SELECT adm, tier, created_at FROM systems INNER JOIN map ON map.solarSystemID = systems.system_id WHERE map.solarSystemName=? ORDER BY created_at DESC LIMIT ?", self.conn, params=[system, limit])
+        return pd.read_sql_query("SELECT system_id, adm, tier, created_at FROM systems INNER JOIN map ON map.solarSystemID = systems.system_id WHERE map.solarSystemName=? ORDER BY created_at DESC LIMIT ?", self.conn, params=[system, limit])

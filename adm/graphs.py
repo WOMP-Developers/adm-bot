@@ -14,6 +14,6 @@ def plot_system_adm(system):
         return False
 
     system.created_at = pd.to_datetime(system.created_at)
-    system.pivot(index='created_at', columns='adm', values='adm').plot(xlabel='Date', ylabel='ADM', legend=False)
+    system.plot(x='created_at', y='adm', xlabel='Date', ylabel='ADM', legend=False)
 
     return True

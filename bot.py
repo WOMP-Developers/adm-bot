@@ -11,6 +11,7 @@ from discord.ext import commands
 from adm.commands import create_spreadsheet, create_summary, create_system_graph, update_adm_data
 from adm.configuration import Configuration
 from adm.database import Database
+from adm.service import create_system_adm
 from adm.static_data import update_static_data
 from auto_refresh import threaded_auto_refresh 
 from dotenv import load_dotenv
@@ -70,10 +71,32 @@ async def refresh(ctx):
     update_adm_data(configuration, database)
     await ctx.send("ADM data manually refreshed 🚀")
 
+async def update_adm(ctx, system_name, adm: float):
+    system = database.select_system_with_name(system_name)
+    if system.empty:
+        await ctx.send(f"No system with name: {system_name}")
+        return
+
+    adm = float(adm)
+
+    if adm <= 0.0 or adm > 6.0:
+        await ctx.send(f"Invalid ADM: {adm} (1.0-6.0 valid)")
+        return
+    
+    insert_systems = create_system_adm(system, adm)
+
+    database.insert_systems(insert_systems)
+
+    await ctx.send(f"Manually updated {system_name} ADM to {adm}")
+
 @bot.command(name='adm')
 async def command_adm(ctx, *args):
     if len(args) == 0:
         await send_summary(ctx)
+        return
+    
+    if len(args) == 3 and args[0] == 'update':
+        await update_adm(ctx, args[1], args[2])
         return
     
     for arg in args:
