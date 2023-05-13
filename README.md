@@ -22,6 +22,7 @@ python bot.py
 - `!adm <system>` - send a graph showing system ADM over time
 - `!adm refresh` - manually refresh the data
 - `!adm update <system> <adm>` - manually update ADM for system
+- `!adm help` - print help message
 
 ## Caveats
 * The ADM data from ESI is only updated once a day, so refreshing more often than that is not necessary.
