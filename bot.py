@@ -26,8 +26,6 @@ intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 configuration = Configuration()
-print(configuration)
-
 database = Database()
 
 interrupt_event = threading.Event()
@@ -41,22 +39,22 @@ def convert_to_local_timestamp(date):
     return int(time.mktime(generated_local_date.timetuple()))
 
 
-async def send_system_graph(user, system_name):
+async def send_system_graph(ctx, system_name):
     file_path = create_system_graph(database, system_name)
     if file_path:
-        await user.send(file=discord.File(file_path), content=f"{system_name}: Historic Data")
+        await ctx.send(file=discord.File(file_path), content=f"{system_name}: Historic Data")
         os.remove(file_path)
 
     else:
-        await user.send(f"{system_name}: No data (╯°□°）╯︵ ┻━┻")
+        await ctx.send(f"{system_name}: No data (╯°□°）╯︵ ┻━┻")
 
-async def send_summary(user):
+async def send_summary(ctx):
     file_name = "adm_summary.txt"
     generated_at = create_summary(database, file_name)
     timestamp = convert_to_local_timestamp(generated_at)
 
     if os.path.isfile(file_name):
-        await user.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
+        await ctx.send(file=discord.File(file_name), content=f'ADM @ <t:{timestamp}:F>')
         os.remove(file_name)
 
 async def send_csv(user):
@@ -73,28 +71,61 @@ async def refresh(ctx):
     update_adm_data(configuration, database)
     await ctx.send("ADM data manually refreshed 🦀")
 
-async def update_adm(user, system_name, adm: float):
+async def update_adm(ctx, system_name, adm: float):
     system = database.select_system_with_name(system_name)
     if system.empty:
-        await user.send(f"No system with name: {system_name}")
+        await ctx.send(f"No system with name: {system_name}")
         return
 
     adm = float(adm)
 
     if adm <= 0.0 or adm > 6.0:
-        await user.send(f"Invalid ADM: {adm} (1.0-6.0 valid)")
+        await ctx.send(f"Invalid ADM: {adm} (1.0-6.0 valid)")
         return
     
     insert_systems = create_system_adm(system, adm)
 
     database.insert_systems(insert_systems)
 
-    await user.send(f"Manually updated {system_name} ADM to {adm}")
+    await ctx.send(f"Manually updated {system_name} ADM to {adm}")
+
+help_text = """
+Summary:
+  ADM bot collects ADM values daily from the EVE API.
+  Users can send commands to show ADM data.
+
+Usage:
+  `!adm` - post summary of all systems
+  `!adm csv` - post CSV file of all systems
+  `!adm <system>` - post graph of system ADM
+  `!adm update <system> <adm>` - manually set adm for system
+  `!adm refresh` - manually refresh all adm data
+  `!adm help` - display this message
+"""
+
+@bot.event
+async def on_ready():
+    for guild in bot.guilds:
+        for channel in guild.channels:
+            if (isinstance(channel, discord.TextChannel) and
+                channel.permissions_for(guild.me).send_messages and
+                channel.name == configuration.discord_channel
+            ):
+                await channel.send(f"=== ADM Bot is started 🦀 ===\n{help_text}")
 
 @bot.command(name='adm')
 async def command_adm(ctx, *args):
+    if (not isinstance(ctx.channel, discord.channel.DMChannel) and
+        configuration.discord_channel and
+        ctx.channel.name != configuration.discord_channel
+    ): return
+
     if len(args) == 0:
         await send_summary(ctx)
+        return
+    
+    if args[0] == 'help':
+        await ctx.send(help_text)
         return
     
     if len(args) == 3 and args[0] == 'update':
@@ -105,9 +136,9 @@ async def command_adm(ctx, *args):
         if arg == 'refresh':
             await refresh(ctx)
         elif arg == 'csv':
-            await send_csv(ctx.author)
+            await send_csv(ctx)
         else:
-            await send_system_graph(ctx.author, arg)
+            await send_system_graph(ctx, arg)
 
 def signal_handler(sig, frame):
     interrupt_event.set()
