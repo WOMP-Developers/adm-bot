@@ -1,22 +1,19 @@
 #!/usr/bin/env python
 
-from zoneinfo import ZoneInfo
 import discord
 import os
 import threading
 import signal
 import sys
-import time
 from discord.ext import commands
 from adm.commands import create_spreadsheet, create_summary, create_system_graph, update_adm_data
 from adm.configuration import Configuration
 from adm.database import Database
+from adm.dateutils import convert_to_local_timestamp
 from adm.service import create_system_adm
 from adm.static_data import update_static_data
 from auto_refresh import threaded_auto_refresh 
 from dotenv import load_dotenv
-from datetime import datetime
-from dateutil.tz import *
 
 load_dotenv()
 
@@ -29,15 +26,6 @@ configuration = Configuration()
 database = Database()
 
 interrupt_event = threading.Event()
-
-def convert_to_local_timestamp(date):
-    generated_utc_date = datetime.fromisoformat(date)
-    generated_utc_date = generated_utc_date.replace(tzinfo=tzutc())
-
-    generated_local_date = generated_utc_date.astimezone(tzlocal())
-
-    return int(time.mktime(generated_local_date.timetuple()))
-
 
 async def send_system_graph(ctx, system_name):
     file_path = create_system_graph(database, system_name)
