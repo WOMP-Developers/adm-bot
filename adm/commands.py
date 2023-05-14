@@ -20,7 +20,7 @@ def create_system_graph(database, system_name):
 def create_summary(database, file_name):
     system_adms = database.select_systems()
     
-    system_adms.sort_values(by='adm', inplace=True, ascending=False)
+    system_adms.sort_values(by='adm', inplace=True, ascending=True)
     
     s_tier = system_adms.loc[system_adms['tier'] == 's_tier']
     a_tier = system_adms.loc[system_adms['tier'] == 'a_tier']
@@ -29,11 +29,11 @@ def create_summary(database, file_name):
     d_tier = system_adms.loc[system_adms['tier'] == 'd_tier']
 
     sorted_summary = [
-        {'Tier': 'S', 'Systems': '\n'.join(s_tier['solarSystemName']), 'ADM': '\n'.join(s_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(s_tier['constellationName']), 'Region': '\n'.join(s_tier['regionName'])},
-        {'Tier': 'A', 'Systems': '\n'.join(a_tier['solarSystemName']), 'ADM': '\n'.join(a_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(a_tier['constellationName']), 'Region': '\n'.join(a_tier['regionName'])},
-        {'Tier': 'B', 'Systems': '\n'.join(b_tier['solarSystemName']), 'ADM': '\n'.join(b_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(b_tier['constellationName']), 'Region': '\n'.join(b_tier['regionName'])},
+        {'Tier': 'D', 'Systems': '\n'.join(d_tier['solarSystemName']), 'ADM': '\n'.join(d_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(d_tier['constellationName']), 'Region': '\n'.join(d_tier['regionName'])},
         {'Tier': 'C', 'Systems': '\n'.join(c_tier['solarSystemName']), 'ADM': '\n'.join(c_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(c_tier['constellationName']), 'Region': '\n'.join(c_tier['regionName'])},
-        {'Tier': 'D', 'Systems': '\n'.join(d_tier['solarSystemName']), 'ADM': '\n'.join(d_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(d_tier['constellationName']), 'Region': '\n'.join(d_tier['regionName'])}
+        {'Tier': 'B', 'Systems': '\n'.join(b_tier['solarSystemName']), 'ADM': '\n'.join(b_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(b_tier['constellationName']), 'Region': '\n'.join(b_tier['regionName'])},
+        {'Tier': 'A', 'Systems': '\n'.join(a_tier['solarSystemName']), 'ADM': '\n'.join(a_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(a_tier['constellationName']), 'Region': '\n'.join(a_tier['regionName'])},
+        {'Tier': 'S', 'Systems': '\n'.join(s_tier['solarSystemName']), 'ADM': '\n'.join(s_tier['adm'].map(lambda v: str(v))), 'Constellation': '\n'.join(s_tier['constellationName']), 'Region': '\n'.join(s_tier['regionName'])}
     ]
 
     table = tabulate(sorted_summary, showindex=False, headers='keys', tablefmt='fancy_grid',numalign='left',stralign='center')
