@@ -4,6 +4,11 @@ This is a discord bot which will collect alliance system ADM's daily and provide
 
 ## ⚡ Quick Start
 
+### Using pip
+```shell
+
+```
+
 ### Using poetry
 ```shell
 # Edit variables in .env
@@ -11,22 +16,6 @@ cp .env.example .env
 
 poetry install
 poetry run python pydisadm/__main__.py
-```
-
-### Using pip / venv
-
-```shell
-# Edit variables in .env
-cp .env.example .env
-
-# Create virtual environment
-python -m venv .venv
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run bot
-python pydidadm/__main__.py
 ```
 
 ## 📃 Commands

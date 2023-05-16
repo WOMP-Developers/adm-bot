@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 
-import asyncio
 import signal
 import sys
 import threading
-from configuration import Configuration
-from pydisadm.bot.adm_bot import AdmBot
-from pydisadm.controller.adm_controller import AdmController
-from runnable.runnable_refresh import run_auto_refresh
-from services.database import Database
+
 from dotenv import load_dotenv
 
-from loader.static_data import update_static_data
+from pydisadm.bot.adm_bot import AdmBot
+from pydisadm.configuration import Configuration
+from pydisadm.controller.adm_controller import AdmController
+from pydisadm.loader.static_data import update_static_data
+from pydisadm.runnable.runnable_refresh import run_auto_refresh
+from pydisadm.services.database import Database
 
 interrupt_event = threading.Event()
 

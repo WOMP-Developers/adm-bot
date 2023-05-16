@@ -1,10 +1,10 @@
 import schedule
 import logging
 
-from configuration import Configuration
+from pydisadm.configuration import Configuration
 from pydisadm.controller.adm_controller import AdmController
-from services.database import Database
-from utils.thread_utils import run_threaded
+from pydisadm.services.database import Database
+from pydisadm.utils.thread_utils import run_threaded
 
 logger = logging.getLogger('adm_auto_refresh')
 
