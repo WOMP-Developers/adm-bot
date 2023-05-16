@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.3 (2023-05-16)
+### Documentation
+* Add repository field ([`28a8ab8`](https://github.com/agelito/adm-bot/commit/28a8ab8537b0fc4cc75166398c4192b8e80363e8))
+
 ## v1.0.2 (2023-05-16)
 ### Documentation
 * Update quick start section for pip ([`0a25a39`](https://github.com/agelito/adm-bot/commit/0a25a39f67ebc294b384e3cdcee7cc30005e3edf))
