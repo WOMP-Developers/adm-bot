@@ -5,6 +5,7 @@ description = "A Discord bot providing ADM summaries."
 authors = ["Axel Wettervik"]
 license = "MIT"
 readme = "README.md"
+include = ["data/*.csv"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -3,6 +3,7 @@
 import signal
 import sys
 import threading
+import logging
 
 from dotenv import load_dotenv
 
@@ -31,7 +32,12 @@ def main() -> int:
     configuration = Configuration()
 
     database = Database()
-    update_static_data(database)
+
+    try:
+        update_static_data(database)
+    except Exception as err:
+        logging.error(err)
+        return 1
 
     controller = AdmController(configuration, database)
     controller.update_adm_data()
