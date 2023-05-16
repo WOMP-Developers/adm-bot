@@ -1,22 +1,25 @@
 import requests
+import logging
+
+logger = logging.getLogger('esi_api')
 
 def safe_get(url):
     try:
         response = requests.get(url)
-        return response
     except Exception as err:
-        print(err)
+        logger.error(err)
+        return None
 
-    return None
+    return response
 
 def safe_post(url, json):
     try:
         response = requests.post(url, json=json)
-        return response
     except Exception as err:
-        print(err)
+        logger.error(err)
+        return None
 
-    return None
+    return response
 
 def universe_names(ids):
     url = "https://esi.evetech.net/latest/universe/names/?datasource=tranquility"

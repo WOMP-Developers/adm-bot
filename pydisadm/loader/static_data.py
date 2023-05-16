@@ -1,6 +1,6 @@
 import pandas as pd
 
-def update_static_data(database):
+def load_solar_systems() -> pd.DataFrame:
     solar_systems = pd.read_csv('data/mapSolarSystems.csv', usecols=['regionID','constellationID','solarSystemID','solarSystemName'])
     solar_systems.set_index('solarSystemID', inplace=True)
 
@@ -13,4 +13,8 @@ def update_static_data(database):
     solar_systems = solar_systems.join(constellations, on='constellationID', how='left')
     solar_systems = solar_systems.join(regions, on='regionID', how='left')
 
+    return solar_systems
+
+def update_static_data(database):
+    solar_systems = load_solar_systems()
     database.insert_map_data(solar_systems)

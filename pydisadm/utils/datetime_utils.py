@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 from dateutil.tz import *
 
-def convert_to_local_timestamp(date: str):
+def convert_to_local_timestamp(date: str) -> int:
     generated_utc_date = datetime.fromisoformat(date)
     generated_utc_date = generated_utc_date.replace(tzinfo=tzutc())
 
