@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.4 (2023-05-16)
+### Documentation
+* Improved quick start guide ([`2bd7ca7`](https://github.com/agelito/adm-bot/commit/2bd7ca7926b1e06055090f3fea5e26be49a21070))
+
 ## v1.0.3 (2023-05-16)
 ### Documentation
 * Add repository field ([`28a8ab8`](https://github.com/agelito/adm-bot/commit/28a8ab8537b0fc4cc75166398c4192b8e80363e8))
