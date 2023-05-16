@@ -4,22 +4,34 @@ This is a discord bot which will collect alliance system ADM's daily and provide
 
 ## ⚡ Quick Start
 
-### Using pip
+### From PyPI
 ```shell
-# Edit variables in .env
-cp .env.example .env
+# 1. Set up environment
+export DISCORD_TOKEN=your-token-here
+export DISCORD_CHANNEL=your-channel-here
+export DISCORD_APP_ID=your-app-id-here
+export ALLIANCE_ID=your-alliance-id-here
 
+# 2. Install package from PyPI
 pip install pydisadm
 
+# 3. Run Bot
 python -m pydisadm
 ```
 
-### Using poetry
+### From source
 ```shell
-# Edit variables in .env
+# 1. Clone repository
+git clone https://github.com/agelito/adm-bot
+cd adm-bot
+
+# 2. Copy and edit .env
 cp .env.example .env
 
+# 3. Install dependencies
 poetry install
+
+# 4. Run bot
 poetry run python pydisadm/__main__.py
 ```
 
