@@ -6,7 +6,12 @@ This is a discord bot which will collect alliance system ADM's daily and provide
 
 ### Using pip
 ```shell
+# Edit variables in .env
+cp .env.example .env
 
+pip install pydisadm
+
+python -m pydisadm
 ```
 
 ### Using poetry
