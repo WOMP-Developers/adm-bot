@@ -46,6 +46,8 @@ def main() -> int:
     bot.setup_cogs()
     bot.run()
 
+    interrupt_event.set()
+
     return 0
 
 if __name__ == '__main__':
