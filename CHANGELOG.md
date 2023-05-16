@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.5 (2023-05-16)
+### Documentation
+* Add some nice badges ([`588e548`](https://github.com/agelito/adm-bot/commit/588e54875f40794097fd684dcf20d0db5713e54c))
+
 ## v1.0.4 (2023-05-16)
 ### Documentation
 * Improved quick start guide ([`2bd7ca7`](https://github.com/agelito/adm-bot/commit/2bd7ca7926b1e06055090f3fea5e26be49a21070))
