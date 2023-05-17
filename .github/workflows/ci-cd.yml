@@ -22,7 +22,7 @@ jobs:
         run: poetry install
         
       - name: Run pylint
-        run: poetry run pylint --rcfile pylint.rc pydisadm
+        run: poetry run pylint --rcfile pylint.rc pydisadm/**/*.py
 
       - name: Run pytest
         run: poetry run pytest tests/ --cov=pydisadm --cov-report=xml

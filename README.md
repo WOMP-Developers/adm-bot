@@ -63,6 +63,22 @@ Configuration is done using environment variables or `dotenv`. See `.env.example
 
 ## 🚧 Development
 
+### Environment
+The development environment and dependencies is managed using `poetry`. Use the following command to set up environment and install dependencies:
+```shell
+poetry install
+```
+
+A nested poetry shell can be started using this command:
+```shell
+poetry shell
+```
+
+### Run Linting
+```shell
+pylint --rcfile pylint.rc pydisadm/**/*.py
+```
+
 ### Run Unit Tests
 ```shell
 pytest tests/ --cov=pydisadm --cov-branch

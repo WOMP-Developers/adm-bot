@@ -3,7 +3,6 @@
 import signal
 import sys
 import threading
-import logging
 
 from dotenv import load_dotenv
 
@@ -16,7 +15,7 @@ from pydisadm.services.database import Database
 
 interrupt_event = threading.Event()
 
-def signal_handler(sig, frame):
+def signal_handler(_1, _2):
     print('Interrupted by CTRL+C')
     interrupt_event.set()
     sys.exit(0)
@@ -33,11 +32,7 @@ def main() -> int:
 
     database = Database()
 
-    try:
-        update_static_data(database)
-    except Exception as err:
-        logging.error(err)
-        return 1
+    update_static_data(database)
 
     controller = AdmController(configuration, database)
     controller.update_adm_data()
@@ -51,4 +46,4 @@ def main() -> int:
     return 0
 
 if __name__ == '__main__':
-    sys.exit(main()) 
+    sys.exit(main())

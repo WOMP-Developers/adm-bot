@@ -18,13 +18,13 @@ class AdmBot:
 
         intents = create_intents()
         self.bot = commands.Bot(application_id=configuration.discord_app_id, command_prefix=None, intents=intents, help_command=None)
-    
+  
     async def setup_cogs_async(self):
         await self.bot.add_cog(Adm(self.bot, self.configuration, self.controller))
 
     def setup_cogs(self):
         return asyncio.run(self.setup_cogs_async())
-    
+
     async def sync_commands_async(self):
         await self.bot.tree.sync()
 

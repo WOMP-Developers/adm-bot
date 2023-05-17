@@ -27,10 +27,10 @@ def test_empty_configuration():
 
     sut = Configuration()
 
-    assert sut.alliance_id == None, "alliance_id is expected to be None"
-    assert sut.discord_app_id == None, "discord_app_id is expected to be None"
-    assert sut.discord_channel == None, "discord_channel is expected to be None"
-    assert sut.discord_token == None, "discord_token is expected to be None"
+    assert sut.alliance_id is None, "alliance_id is expected to be None"
+    assert sut.discord_app_id is None, "discord_app_id is expected to be None"
+    assert sut.discord_channel is None, "discord_channel is expected to be None"
+    assert sut.discord_token is None, "discord_token is expected to be None"
 
 def test_alliance_id_number(mock_env_alliance_id):
     """Test assigning number to alliance_id"""

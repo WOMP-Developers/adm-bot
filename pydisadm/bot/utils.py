@@ -1,13 +1,13 @@
 import discord
 
 def check_allowed_channel(channel, allowed_channel):
-    if allowed_channel == None:
+    if allowed_channel is None:
         return True
     if isinstance(channel, discord.channel.PartialMessageable):
         return True
     if channel.name == allowed_channel:
         return True
-    return 
+    return
 
 
 def text_channels_with_send_permission(bot):

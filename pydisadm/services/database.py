@@ -17,7 +17,7 @@ class Database:
                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                         )
                     """)
-        
+      
         cur.execute("""
                         CREATE TABLE IF NOT EXISTS map (
                             solarSystemID INTEGER PRIMARY KEY NOT NULL, 
@@ -35,8 +35,8 @@ class Database:
 
         self.conn.commit()
 
-    def insert_map_data(self, map):
-        map.to_sql('map', self.conn, index=True, if_exists='replace')
+    def insert_map_data(self, map_data):
+        map_data.to_sql('map', self.conn, index=True, if_exists='replace')
 
         self.conn.commit()
 
@@ -52,7 +52,7 @@ class Database:
             LEFT JOIN map t2 ON t1.system_id = t2.solarSystemID 
             WHERE t1.created_at = (SELECT MAX(t3.created_at) FROM systems t3 WHERE t3.system_id = t1.system_id);
         """, self.conn)
-    
+   
     def select_system_by_name(self, name) -> pd.DataFrame:
         sql = """
             SELECT map.solarSystemName system_name, adm, tier, created_at FROM systems
