@@ -60,5 +60,12 @@ Configuration is done using environment variables or `dotenv`. See `.env.example
 * The ADM data from ESI is only updated once a day, so refreshing more often than that is not necessary.
 * The database will continue to fill up with historic entries, manually inspect size and purge older entries if it's too big.
 
+## 🚧 Development
+
+### Run Unit Tests
+```shell
+pytest tests/ --cov=pydisadm --cov-branch
+```
+
 ## 💡 Credits
 Project is forked from and inspired by [@anjode](https://www.github.com/anjode)

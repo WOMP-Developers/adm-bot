@@ -9,8 +9,14 @@ class Configuration:
         self.discord_app_id = os.getenv('DISCORD_APP_ID')
 
         alliance_id = os.getenv('ALLIANCE_ID')
+
         if alliance_id != None:
-            self.alliance_id = int(alliance_id)
+            try:
+                alliance_id = int(alliance_id)
+            except ValueError as error:
+                raise ValueError('[configuration] invalid `ALLIANCE_ID` value', alliance_id) from error
+
+        self.alliance_id = alliance_id
 
     def __str__(self):
         return '{}(discord_token={}, discord_channel={}, discord_app_id={}, alliance_id={})'.format(
