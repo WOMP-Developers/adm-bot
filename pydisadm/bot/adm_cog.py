@@ -25,8 +25,8 @@ class Adm(commands.GroupCog):
 
         file_name = "adm_tier_list.txt"
 
-        with open(file_name, 'w', encoding='UTF-8') as f:
-            f.write(tier_list)
+        with open(file_name, 'w', encoding='UTF-8') as file:
+            file.write(tier_list)
 
         if self.controller.write_file(file_name, tier_list):
             await interaction.followup.send(
@@ -68,9 +68,9 @@ class Adm(commands.GroupCog):
         if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
-        
+
         await interaction.response.defer()
-        
+
         recommended_system = self.controller.get_recommended_system()
 
         system = recommended_system['solarSystemName']
@@ -84,7 +84,7 @@ class Adm(commands.GroupCog):
         if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
-        
+
         await self.send_tier_list_summary(interaction)
 
     @app_commands.command(description='Posts a CSV file of all system ADM levels')
