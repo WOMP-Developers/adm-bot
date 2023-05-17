@@ -155,6 +155,24 @@ class AdmController:
 
         return True
 
+    def update_system_adm_from_index(self,
+                                     system_name: str,
+                                     military: int,
+                                     industrial: int,
+                                     strategic: int) -> bool:
+        """Update ADM for system with name from index values"""
+        system = self.database.select_system_with_name(system_name)
+
+        if system.empty:
+            return (False, 0)
+
+        insert_systems = self.create_system_adm_from_index(
+            system, military, industrial, strategic)
+
+        self.database.insert_systems(insert_systems)
+
+        return (True, insert_systems['adm'][0])
+
     def get_system_adms(self, alliance_id):
         """Retrieve ADM for systems controlled by alliance"""
         structures = sovereignty_structures()

@@ -131,7 +131,7 @@ class Adm(commands.GroupCog):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
-        await interaction.response.send_modal(UpdateAdmModal(system_name))
+        await interaction.response.send_modal(UpdateAdmModal(system_name, self.controller))
 
     @commands.Cog.listener()
     async def on_ready(self):
