@@ -19,7 +19,10 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Install package
-        run: poetry install
+        run: poetry 
+        
+      - name: Run pylint
+        run: poetry run pylint --rcfile pylint.rc pydisadm
 
       - name: Run pytest
         run: poetry run pytest tests/ --cov=pydisadm --cov-report=xml
