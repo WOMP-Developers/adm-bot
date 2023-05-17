@@ -3,9 +3,35 @@ name: ci-cd
 on: [push, pull_request]
 
 jobs:
-  # TODO: ci step (unit tests, coverage)
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Check-out repository
+        uses: actions/checkout@v2
+
+      - name: Install poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install package
+        run: poetry install
+
+      - name: Run pytest
+        run: poetry run pytest tests/ --cov=pydisadm --cov-report=xml
+
+      - name: Upload to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage.xml
 
   cd:
+    needs: ci
+
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     runs-on: ubuntu-latest
