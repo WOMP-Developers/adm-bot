@@ -3,6 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/agelito/adm-bot/ci-cd.yml)
 ![PyPI](https://img.shields.io/pypi/v/pydisadm)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pydisadm)
+[![codecov](https://codecov.io/gh/agelito/adm-bot/branch/main/graph/badge.svg?token=OHRY3OW18Y)](https://codecov.io/gh/agelito/adm-bot)
 
 This is a discord bot which will collect alliance system ADM's daily and provide commands to display them in a convenient tier list.
 
