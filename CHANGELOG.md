@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.0 (2023-05-17)
+### Feature
+* Modal view to manually update system adm ([#8](https://github.com/agelito/adm-bot/issues/8)) ([`e36835b`](https://github.com/agelito/adm-bot/commit/e36835b4143aa5da35d76281b3695e9095633292))
+
 ## v1.0.7 (2023-05-17)
 
 
