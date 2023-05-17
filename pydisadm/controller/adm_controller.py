@@ -9,8 +9,10 @@ from pydisadm.services.database import Database
 from pydisadm.services.esi import sovereignty_structures
 from pydisadm.utils.plot_utils import plot_adm_history_of_systems, plot_save_to_file
 
+
 class AdmController:
     """Controller implementation for ADM operations"""
+
     def __init__(self, configuration: Configuration, database: Database):
         self.configuration = configuration
         self.database = database
@@ -51,31 +53,40 @@ class AdmController:
         ]
 
         table = tabulate(sorted_summary, showindex=False, headers='keys',
-                        tablefmt='fancy_grid', numalign='left', stralign='center')
+                         tablefmt='fancy_grid', numalign='left', stralign='center')
 
         generated_at = self.database.select_most_recent_row()
 
         return (table, generated_at['created_at'][0])
-    
+
     def create_history_graph(self, name, file_name):
         """Generate an ADM history graph and save to file"""
         systems_by_name = self.database.select_system_by_name(name)
-        
+
         if plot_adm_history_of_systems(systems_by_name):
             plot_save_to_file('ADM History', file_name)
 
         return os.path.isfile(file_name)
-    
+
     def create_spreadsheet(self, file_name):
         """Generate a spreadsheet of ADM data and save to file"""
         system_adms = self.database.select_systems()
         system_adms.sort_values(by='adm', inplace=True, ascending=False)
 
-        system_adms.to_csv(file_name, index=False, columns=[
-                        'system_id', 'adm', 'tier', 'created_at', 'solarSystemName', 'constellationName', 'regionName'])
+        csv_columns = [
+            'system_id',
+            'adm',
+            'tier',
+            'created_at',
+            'solarSystemName',
+            'constellationName',
+            'regionName'
+        ]
+
+        system_adms.to_csv(file_name, index=False, columns=csv_columns)
 
         return os.path.isfile(file_name)
-    
+
     def tier_list(self, systems):
         """Assign tier column based on system ADM"""
         conditions = [
@@ -147,7 +158,7 @@ class AdmController:
         system_adms.drop(columns=drop_columns, inplace=True)
 
         rename_columns = {'solar_system_id': 'system_id',
-                        'vulnerability_occupancy_level': 'adm'}
+                          'vulnerability_occupancy_level': 'adm'}
         system_adms.rename(columns=rename_columns, inplace=True)
 
         self.tier_list(system_adms)
@@ -170,8 +181,8 @@ class AdmController:
 
     def write_file(self, file_name, content) -> bool:
         """Write content to file"""
-        with open(file_name, 'w', encoding='UTF-8') as f:
-            f.write(content)
+        with open(file_name, 'w', encoding='UTF-8') as file:
+            file.write(content)
 
         return os.path.isfile(file_name)
 
