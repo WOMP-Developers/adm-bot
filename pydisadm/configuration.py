@@ -10,7 +10,7 @@ class Configuration:
 
         alliance_id = os.getenv('ALLIANCE_ID')
 
-        if alliance_id != None:
+        if alliance_id is not None:
             try:
                 alliance_id = int(alliance_id)
             except ValueError as error:
@@ -19,6 +19,4 @@ class Configuration:
         self.alliance_id = alliance_id
 
     def __str__(self):
-        return '{}(discord_token={}, discord_channel={}, discord_app_id={}, alliance_id={})'.format(
-            self.__class__.__name__, self.discord_token, self.discord_channel, self.discord_app_id, self.alliance_id
-        )
+        return f'{self.__class__.__name__}(discord_token={self.discord_token}, discord_channel={self.discord_channel}, discord_app_id={self.discord_app_id}, alliance_id={self.alliance_id})'
