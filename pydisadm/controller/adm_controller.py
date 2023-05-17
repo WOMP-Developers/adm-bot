@@ -111,10 +111,11 @@ class AdmController:
         return systems
 
     def create_system_adm_from_index(self, system, military: int, industrial: int, strategic: int):
+        """Create a DataFrame for system ADM data from index values"""
         adm = adm_from_index(military, industrial, strategic)
-        
+
         return self.create_system_adm(system, adm)
-        
+
 
     def create_system_adm(self, system, adm):
         """Create a DataFrame for system ADM data"""
