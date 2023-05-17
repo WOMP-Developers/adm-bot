@@ -7,6 +7,7 @@ from tabulate import tabulate
 from pydisadm.configuration import Configuration
 from pydisadm.services.database import Database
 from pydisadm.services.esi import sovereignty_structures
+from pydisadm.utils.adm_utils import adm_from_index
 from pydisadm.utils.plot_utils import plot_adm_history_of_systems, plot_save_to_file
 
 
@@ -108,6 +109,12 @@ class AdmController:
         systems['tier'] = np.select(conditions, values)
 
         return systems
+
+    def create_system_adm_from_index(self, system, military: int, industrial: int, strategic: int):
+        adm = adm_from_index(military, industrial, strategic)
+        
+        return self.create_system_adm(system, adm)
+        
 
     def create_system_adm(self, system, adm):
         """Create a DataFrame for system ADM data"""
