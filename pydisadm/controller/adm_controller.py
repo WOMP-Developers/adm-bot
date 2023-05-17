@@ -121,7 +121,7 @@ class AdmController:
 
     def get_alliance_structures(self, structures, alliance_id):
         """Retrieve a list of alliance sovreignty structures"""
-        df = pd.DataFrame.from_dict(structures)
+        structure_data = pd.DataFrame.from_dict(structures)
 
         drop_columns = [
             'structure_id',
@@ -130,9 +130,9 @@ class AdmController:
             'vulnerable_start_time',
         ]
 
-        df.drop(columns=drop_columns, inplace=True)
+        structure_data.drop(columns=drop_columns, inplace=True)
 
-        return df[df['alliance_id'] == alliance_id]
+        return structure_data[structure_data['alliance_id'] == alliance_id]
 
     def update_system_adm(self, system_name: str, adm: float) -> bool:
         """Update ADM for system with name"""
