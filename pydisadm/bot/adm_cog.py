@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+from pydisadm.bot.update_adm_modal import UpdateAdmModal
 
 from pydisadm.bot.utils import check_allowed_channel, text_channels_with_send_permission
 from pydisadm.configuration import Configuration
@@ -123,13 +124,14 @@ class Adm(commands.GroupCog):
         await interaction.followup.send("ADM data manually refreshed 🦀")
 
     @app_commands.command(description='Manually update ADM of system.')
-    async def update(self, interaction: discord.Interaction, system_name: str, adm: str):
+    @app_commands.describe(system_name='Which system to update ADM')
+    async def update(self, interaction: discord.Interaction, system_name: str):
         """Command to manually update ADM for system"""
         if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
-        await self.update_adm(interaction, system_name, float(adm))
+        await interaction.response.send_modal(UpdateAdmModal(system_name, self.controller))
 
     @commands.Cog.listener()
     async def on_ready(self):
