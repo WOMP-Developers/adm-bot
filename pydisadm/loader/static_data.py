@@ -1,8 +1,10 @@
+"""Utilities for loading static data"""
 import pandas as pd
 
 from pydisadm.loader.datasets import get_constellations, get_regions, get_solar_systems
 
 def load_solar_systems() -> pd.DataFrame:
+    """Load solar systems data"""
     solar_systems = pd.read_csv(get_solar_systems(), usecols=[
         'regionID','constellationID','solarSystemID','solarSystemName'])
     solar_systems.set_index('solarSystemID', inplace=True)
@@ -20,5 +22,6 @@ def load_solar_systems() -> pd.DataFrame:
     return solar_systems
 
 def update_static_data(database):
+    """Populate database with solar systems data"""
     solar_systems = load_solar_systems()
     database.insert_map_data(solar_systems)
