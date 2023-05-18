@@ -56,6 +56,7 @@ Configuration is done using environment variables or `dotenv`. See `.env.example
 - `DISCORD_CHANNEL` - the channel name bot should listen too, if this is empty the bot will listen to all channels.
 - `DISCORD_APP_ID` - the bot application ID
 - `ALLIANCE_ID` - the alliance ID for collecting ADM values, only systems owned by this alliance will be collected.
+- `DB_KEEP_ADM_DAYS` - how many days adm history should be kept in database (default 7).
 
 ## 🔍 Caveats
 * The ADM data from ESI is only updated once a day, so refreshing more often than that is not necessary.

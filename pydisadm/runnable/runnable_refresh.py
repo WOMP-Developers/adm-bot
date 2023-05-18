@@ -16,18 +16,22 @@ def scheduler_loop(interrupt_event):
 
     controller = AdmController(configuration, database)
 
-    schedule.every().day.at('11:30', tz='UTC').do(refresh_job, controller)
+    schedule.every().day.at('11:30', tz='UTC').do(refresh_job, controller, configuration)
 
     while True:
         schedule.run_pending()
         if interrupt_event.wait(timeout=1000):
             break
 
-def refresh_job(controller: AdmController):
+def refresh_job(controller: AdmController, configuration: Configuration):
     """Refresh adm data"""
     logger.info('updating adm data...')
     controller.update_adm_data()
     logger.info('adm data update finished')
+
+    logger.info('purge old adm data...')
+    controller.purge_adm_records(configuration.db_keep_adm_days)
+    logger.info('purge finished')
 
 def run_auto_refresh(interrupt_event):
     """Run automatic adm data refresh in separate thread"""

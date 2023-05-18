@@ -80,3 +80,15 @@ class Database:
             INNER JOIN map ON map.solarSystemID = systems.system_id
             WHERE map.solarSystemName=? ORDER BY created_at DESC LIMIT ?
         """, self.conn, params=[system, limit])
+
+    def delete_system_rows(self, days_old):
+        """Delete system rows older than days_old"""
+        cur = self.conn.cursor()
+        cur.execute(f"""
+            DELETE FROM systems 
+            WHERE id IN (
+                SELECT id FROM systems WHERE created_at < (select datetime('now', '-{days_old} day'))
+            )
+        """)
+
+        self.conn.commit()
