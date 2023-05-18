@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.0 (2023-05-18)
+### Feature
+* Automatically purge adm data after days ([#11](https://github.com/agelito/adm-bot/issues/11)) ([`d333bfa`](https://github.com/agelito/adm-bot/commit/d333bfa1efae549a1a84362e8b3f21e930b258ac))
+
 ## v1.1.2 (2023-05-18)
 ### Documentation
 * Correct readme for update command ([#10](https://github.com/agelito/adm-bot/issues/10)) ([`ed615a9`](https://github.com/agelito/adm-bot/commit/ed615a9fee91f546f9641fcb21ad113b7d7bfc3f))
