@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.2 (2023-05-18)
+### Documentation
+* Correct readme for update command ([#10](https://github.com/agelito/adm-bot/issues/10)) ([`ed615a9`](https://github.com/agelito/adm-bot/commit/ed615a9fee91f546f9641fcb21ad113b7d7bfc3f))
+
 ## v1.1.1 (2023-05-17)
 ### Documentation
 * Update badge links ([#9](https://github.com/agelito/adm-bot/issues/9)) ([`f404fb0`](https://github.com/agelito/adm-bot/commit/f404fb0c5bc8783a3a9da6bb89530d338ad97ba9))
