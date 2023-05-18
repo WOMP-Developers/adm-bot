@@ -29,6 +29,10 @@ def refresh_job(controller: AdmController):
     controller.update_adm_data()
     logger.info('adm data update finished')
 
+    logger.info('purge old adm data...')
+    controller.purge_adm_records(7)
+    logger.info('purge finished')
+
 def run_auto_refresh(interrupt_event):
     """Run automatic adm data refresh in separate thread"""
     logger.info('starting adm data update thread')

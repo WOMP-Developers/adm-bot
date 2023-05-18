@@ -205,6 +205,11 @@ class AdmController:
 
         self.database.insert_systems(system_adms)
 
+    def purge_adm_records(self, days_old: int):
+        """Purge adm records more than days_old days old"""
+
+        self.database.delete_system_rows(days_old)
+
     def write_file(self, file_name, content) -> bool:
         """Write content to file"""
         with open(file_name, 'w', encoding='UTF-8') as file:

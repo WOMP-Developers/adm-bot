@@ -36,6 +36,7 @@ def main() -> int:
 
     controller = AdmController(configuration, database)
     controller.update_adm_data()
+    controller.purge_adm_records(5)
 
     bot = AdmBot(configuration, controller)
     bot.setup_cogs()
