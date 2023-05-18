@@ -46,7 +46,7 @@ poetry run python pydisadm/__main__.py
 - `/adm csv` - send a csv of ADM's
 - `/adm history <name>` - send a graph showing system, constellation, or region ADM over time
 - `/adm refresh` - manually refresh the data
-- `/adm update <system> <adm>` - manually update ADM for system
+- `/adm update <system>` - manually update ADM for system
 - `/adm recommend` - recommend a system to raise ADM in
 
 ## 🔧 Configuration
