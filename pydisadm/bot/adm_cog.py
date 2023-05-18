@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import pydisadm
 from pydisadm.bot.update_adm_modal import UpdateAdmModal
 
 from pydisadm.bot.utils import check_allowed_channel, text_channels_with_send_permission
@@ -143,5 +144,14 @@ class Adm(commands.GroupCog):
         valid_channels = [
             channel for channel in channels if channel.name == self.configuration.discord_channel]
 
+        embed = discord.Embed(title=f'🦀 ADM Bot v{pydisadm.__version__}')
+        embed.add_field(name='Summary', value='/adm summary')
+        embed.add_field(name='CSV', value='/adm csv')
+        embed.add_field(name='History', value='/adm history <name>')
+        embed.add_field(name='Update', value='/adm update <system>')
+        embed.add_field(name='Recommend', value='/adm recommend')
+        embed.add_field(name='Update', value='/adm update')
+        embed.add_field(name='Source', value='[github](https://github.com/agelito/adm-bot)')
+
         for channel in valid_channels:
-            await channel.send('=== ADM Bot is started 🦀 ===')
+            await channel.send(embed=embed)
