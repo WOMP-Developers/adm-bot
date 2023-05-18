@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.1 (2023-05-18)
+### Fix
+* Improved bot startup message ([#12](https://github.com/agelito/adm-bot/issues/12)) ([`f8c06bb`](https://github.com/agelito/adm-bot/commit/f8c06bb1a61d73de01a66694d910623efae50c80))
+
 ## v1.2.0 (2023-05-18)
 ### Feature
 * Automatically purge adm data after days ([#11](https://github.com/agelito/adm-bot/issues/11)) ([`d333bfa`](https://github.com/agelito/adm-bot/commit/d333bfa1efae549a1a84362e8b3f21e930b258ac))

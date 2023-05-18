@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydisadm"
-version = "1.2.0"
+version = "1.2.1"
 description = "A Discord bot providing ADM summaries."
 repository = "https://github.com/agelito/adm-bot"
 authors = ["Axel Wettervik"]
