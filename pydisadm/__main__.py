@@ -35,8 +35,9 @@ def main() -> int:
     update_static_data(database)
 
     controller = AdmController(configuration, database)
+    
     controller.update_adm_data()
-    controller.purge_adm_records(5)
+    controller.purge_adm_records(configuration.db_keep_adm_days)
 
     bot = AdmBot(configuration, controller)
     bot.setup_cogs()
