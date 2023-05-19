@@ -150,7 +150,7 @@ class Adm(commands.GroupCog):
         embed.add_field(name='History', value='/adm history <name>')
         embed.add_field(name='Update', value='/adm update <system>')
         embed.add_field(name='Recommend', value='/adm recommend')
-        embed.add_field(name='Update', value='/adm update')
+        embed.add_field(name='Refresh', value='/adm refresh')
         embed.add_field(name='Source', value='[github](https://github.com/agelito/adm-bot)')
 
         for channel in valid_channels:
