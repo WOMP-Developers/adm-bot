@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.2 (2023-05-19)
+### Fix
+* Remove duplicte command in startup message ([#13](https://github.com/agelito/adm-bot/issues/13)) ([`52f5a02`](https://github.com/agelito/adm-bot/commit/52f5a02e1a94fdc063068f9586a122af2379f0c2))
+
 ## v1.2.1 (2023-05-18)
 ### Fix
 * Improved bot startup message ([#12](https://github.com/agelito/adm-bot/issues/12)) ([`f8c06bb`](https://github.com/agelito/adm-bot/commit/f8c06bb1a61d73de01a66694d910623efae50c80))
