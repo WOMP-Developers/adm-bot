@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.3 (2023-05-20)
+### Fix
+* Support python38 ([#14](https://github.com/agelito/adm-bot/issues/14)) ([`cd40d83`](https://github.com/agelito/adm-bot/commit/cd40d8361d2c44b2b20c58a4c9c16bfc7add392d))
+
 ## v1.2.2 (2023-05-19)
 ### Fix
 * Remove duplicte command in startup message ([#13](https://github.com/agelito/adm-bot/issues/13)) ([`52f5a02`](https://github.com/agelito/adm-bot/commit/52f5a02e1a94fdc063068f9586a122af2379f0c2))
