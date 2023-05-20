@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.4 (2023-05-20)
+
+
 ## v1.2.3 (2023-05-20)
 ### Fix
 * Support python38 ([#14](https://github.com/agelito/adm-bot/issues/14)) ([`cd40d83`](https://github.com/agelito/adm-bot/commit/cd40d8361d2c44b2b20c58a4c9c16bfc7add392d))
