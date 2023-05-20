@@ -9,7 +9,7 @@ readme = "README.md"
 include = ["data/*.csv"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 schedule = "^1.2.0"
 requests = "^2.30.0"
 discord = "^2.2.3"
