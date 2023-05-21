@@ -24,7 +24,7 @@ class AdmBot:
         intents = create_intents()
         self.bot = commands.Bot(
             application_id=configuration.discord_app_id,
-            command_prefix=None,
+            command_prefix='!',
             intents=intents,
             help_command=None
         )
