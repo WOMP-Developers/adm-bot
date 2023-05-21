@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+from discord.ext.commands import Context
 import pydisadm
 from pydisadm.bot.update_adm_modal import UpdateAdmModal
 
@@ -139,8 +140,6 @@ class Adm(commands.GroupCog):
         """cog on_ready event callback"""
         channels = text_channels_with_send_permission(self.bot)
 
-        await self.bot.tree.sync()
-
         valid_channels = [
             channel for channel in channels if channel.name == self.configuration.discord_channel]
 
@@ -155,3 +154,16 @@ class Adm(commands.GroupCog):
 
         for channel in valid_channels:
             await channel.send(embed=embed)
+
+    @commands.command(pass_context=True)
+    async def adm_sync_commands(self, ctx: Context):
+        """synchronize slash commands"""
+
+        if self.configuration.discord_guild_id:
+            guild = discord.Object(id=self.configuration.discord_guild_id)
+            self.bot.tree.copy_global_to(guild=guild)
+            await self.bot.tree.sync(guild=guild)
+        else:
+            await self.bot.tree.sync()
+
+        await ctx.send('Synchronized bot commands.')

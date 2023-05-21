@@ -7,6 +7,7 @@ class Configuration:
         self.discord_token = os.getenv('DISCORD_TOKEN')
         self.discord_channel = os.getenv('DISCORD_CHANNEL')
         self.discord_app_id = os.getenv('DISCORD_APP_ID')
+        self.discord_guild_id = os.getenv('DISCORD_GUILD_ID')
 
         alliance_id = os.getenv('ALLIANCE_ID')
 
@@ -36,5 +37,6 @@ class Configuration:
             f'(discord_token={self.discord_token}, ' +
             f'discord_channel={self.discord_channel}, ' +
             f'discord_app_id={self.discord_app_id}, ' +
+            f'discord_guild_id={self.discord_guild_id}, ' +
             f'alliance_id={self.alliance_id} ' +
             f'db_keep_adm_days={self.db_keep_adm_days})')
