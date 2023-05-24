@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.1 (2023-05-24)
+
+
 ## v1.3.0 (2023-05-21)
 ### Feature
 * Add separate command to synchronize slash commands ([`7016c13`](https://github.com/agelito/adm-bot/commit/7016c136470aaad7121010284e36f2b09fa8c5f2))
