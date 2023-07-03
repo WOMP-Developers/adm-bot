@@ -14,6 +14,6 @@ def plot_adm_history_of_systems(systems: pd.DataFrame) -> bool:
 
     systems.created_at = pd.to_datetime(systems.created_at)
     systems.pivot(index='created_at', columns='system_name', values='adm').plot(
-        ylim=(1.0, 6.0), xlabel='Date', ylabel='ADM').legend(bbox_to_anchor=(1, 1))
+        ylim=(1.0, 6.2), xlabel='Date', ylabel='ADM').legend(bbox_to_anchor=(1, 1))
 
     return True
