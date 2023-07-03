@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.2 (2023-07-03)
+### Fix
+* History graph ylim set to 6.2 ([`9ffa9f1`](https://github.com/agelito/adm-bot/commit/9ffa9f1c53dae330b4ff4a3f81551dbccd9d8632))
+
 ## v1.3.1 (2023-05-24)
 
 
