@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.0 (2023-08-07)
+### Feature
+* Add support for mysql database ([#25](https://github.com/agelito/adm-bot/issues/25)) ([`8e42139`](https://github.com/agelito/adm-bot/commit/8e42139e431b1264f8494cb55cd171ebb4767c69))
+
+### Breaking
+* add support for mysql database ([#25](https://github.com/agelito/adm-bot/issues/25)) ([`8e42139`](https://github.com/agelito/adm-bot/commit/8e42139e431b1264f8494cb55cd171ebb4767c69))
+
 ## v1.3.2 (2023-07-03)
 ### Fix
 * History graph ylim set to 6.2 ([`9ffa9f1`](https://github.com/agelito/adm-bot/commit/9ffa9f1c53dae330b4ff4a3f81551dbccd9d8632))
