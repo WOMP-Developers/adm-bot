@@ -11,11 +11,20 @@ This is a discord bot which will collect alliance system ADM's daily and provide
 
 ### From PyPI
 ```shell
-# 1. Set up environment
+# 1. Set up environment (pick option)
+
+# 1.1 With exported variables:
 export DISCORD_TOKEN=your-token-here
 export DISCORD_CHANNEL=your-channel-here
+export DISCORD_GUILD_ID=your-guild-id
 export DISCORD_APP_ID=your-app-id-here
 export ALLIANCE_ID=your-alliance-id-here
+export DB_SERVICE=sqlite
+export DB_CONNECTION_STRING=adm-data.sqlite
+export DB_KEEP_ADM_DAYS=7
+
+# 1.2 With .env file:
+cp .env.example .env
 
 # 2. Install package from PyPI
 pip install pydisadm
@@ -45,18 +54,29 @@ poetry run python pydisadm/__main__.py
 - `/adm summary` - send a summary of ADM's
 - `/adm csv` - send a csv of ADM's
 - `/adm history <name>` - send a graph showing system, constellation, or region ADM over time
-- `/adm refresh` - manually refresh the data
 - `/adm update <system>` - manually update ADM for system
 - `/adm recommend` - recommend a system to raise ADM in
+
+### Maintenace
+- `/adm refresh` - manually refresh the data
+- `!adm_sync_commands` - synchronise the interactive discord commands (only required once)
 
 ## 🔧 Configuration
 Configuration is done using environment variables or `dotenv`. See `.env.example` for example configuration.
 
 - `DISCORD_TOKEN` - the token bot should use when communicating with discord.
 - `DISCORD_CHANNEL` - the channel name bot should listen too, if this is empty the bot will listen to all channels.
+- `DISCORD_GUILD_ID` - the discord server bot should be part of
 - `DISCORD_APP_ID` - the bot application ID
 - `ALLIANCE_ID` - the alliance ID for collecting ADM values, only systems owned by this alliance will be collected.
+- `DB_SERVICE` - which database to use, can be: sqlite or mysql
+- `DB_CONNECTION_STRING` - the connection string
 - `DB_KEEP_ADM_DAYS` - how many days adm history should be kept in database (default 7).
+
+### DB_CONNECTION_STRING examples
+- `sqlite` - `adm-data.sqlite` a file name
+- `mysql` - `root:root@127.0.0.1:3600/pydisadm` - a connection string (user:password@host:port/database). See [mysqlclient](https://docs.sqlalchemy.org/en/20/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb) for more information
+
 
 ## 🔍 Caveats
 * The ADM data from ESI is only updated once a day, so refreshing more often than that is not necessary.

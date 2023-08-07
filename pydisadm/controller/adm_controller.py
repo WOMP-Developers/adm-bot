@@ -5,7 +5,7 @@ import pandas as pd
 from tabulate import tabulate
 
 from pydisadm.configuration import Configuration
-from pydisadm.services.database import Database
+from pydisadm.services.database_sqlite import DatabaseSqlite
 from pydisadm.services.esi import sovereignty_structures
 from pydisadm.utils.adm_utils import adm_from_index
 from pydisadm.utils.plot_utils import plot_adm_history_of_systems, plot_save_to_file
@@ -14,7 +14,7 @@ from pydisadm.utils.plot_utils import plot_adm_history_of_systems, plot_save_to_
 class AdmController:
     """Controller implementation for ADM operations"""
 
-    def __init__(self, configuration: Configuration, database: Database):
+    def __init__(self, configuration: Configuration, database: DatabaseSqlite):
         self.configuration = configuration
         self.database = database
 
@@ -58,7 +58,7 @@ class AdmController:
 
         generated_at = self.database.select_most_recent_row()
 
-        return (table, generated_at['created_at'][0])
+        return (table, str(generated_at['created_at'][0]))
 
     def create_history_graph(self, name, file_name):
         """Generate an ADM history graph and save to file"""

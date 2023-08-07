@@ -1,13 +1,23 @@
+"""Application configuration"""
+
 import os
 
 class Configuration:
     """App configuration variables"""
+
+    DB_SERVICES = ['sqlite', 'mysql']
 
     def __init__(self):
         self.discord_token = os.getenv('DISCORD_TOKEN')
         self.discord_channel = os.getenv('DISCORD_CHANNEL')
         self.discord_app_id = os.getenv('DISCORD_APP_ID')
         self.discord_guild_id = os.getenv('DISCORD_GUILD_ID')
+        self.db_service = os.getenv('DB_SERVICE', 'sqlite')
+
+        if self.db_service not in Configuration.DB_SERVICES:
+            raise ValueError(f'[configuration] unsupported `DB_SERVICE`: {self.db_service}')
+
+        self.db_connection_string = os.getenv('DB_CONNECTION_STRING')
 
         alliance_id = os.getenv('ALLIANCE_ID')
 
@@ -38,5 +48,7 @@ class Configuration:
             f'discord_channel={self.discord_channel}, ' +
             f'discord_app_id={self.discord_app_id}, ' +
             f'discord_guild_id={self.discord_guild_id}, ' +
-            f'alliance_id={self.alliance_id} ' +
-            f'db_keep_adm_days={self.db_keep_adm_days})')
+            f'alliance_id={self.alliance_id}, ' +
+            f'db_keep_adm_days={self.db_keep_adm_days}, ' +
+            f'db_service={self.db_service}, ' +
+            f'db_connection_string={self.db_connection_string})')
