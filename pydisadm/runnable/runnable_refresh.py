@@ -4,7 +4,7 @@ import schedule
 
 from pydisadm.configuration import Configuration
 from pydisadm.controller.adm_controller import AdmController
-from pydisadm.services.database import Database
+from pydisadm.services.factory import create_database
 from pydisadm.utils.thread_utils import run_threaded
 
 logger = logging.getLogger('adm_auto_refresh')
@@ -12,7 +12,8 @@ logger = logging.getLogger('adm_auto_refresh')
 def scheduler_loop(interrupt_event):
     """Scheduler main loop"""
     configuration = Configuration()
-    database = Database()
+
+    database = create_database(configuration)
 
     controller = AdmController(configuration, database)
 
@@ -30,7 +31,7 @@ def refresh_job(controller: AdmController, configuration: Configuration):
     logger.info('adm data update finished')
 
     logger.info('purge old adm data...')
-    controller.purge_adm_records(configuration.db_keep_adm_days)
+    controller.purge_adm_records(configuration.database['keep_adm_days'])
     logger.info('purge finished')
 
 def run_auto_refresh(interrupt_event):

@@ -68,7 +68,7 @@ class Adm(commands.GroupCog):
     @app_commands.command(description='Recommend where to raise ADM')
     async def recommend(self, interaction: discord.Interaction):
         """Command recommending which system to raise ADMs"""
-        if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
+        if not check_allowed_channel(interaction.channel, self.configuration.discord['channel']):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
@@ -84,7 +84,7 @@ class Adm(commands.GroupCog):
     @app_commands.command(description='Posts a summary of all system ADM levels')
     async def summary(self, interaction: discord.Interaction):
         """Command posting a summary of ADMs"""
-        if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
+        if not check_allowed_channel(interaction.channel, self.configuration.discord['channel']):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
@@ -93,7 +93,7 @@ class Adm(commands.GroupCog):
     @app_commands.command(description='Posts a CSV file of all system ADM levels')
     async def csv(self, interaction: discord.Interaction):
         """Command posting a CSV file of ADMs"""
-        if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
+        if not check_allowed_channel(interaction.channel, self.configuration.discord['channel']):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
@@ -108,7 +108,7 @@ class Adm(commands.GroupCog):
     @app_commands.describe(where='The system, constellation, or region to graph.')
     async def history(self, interaction: discord.Interaction, where: str):
         """Command posting a graph of ADM history"""
-        if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
+        if not check_allowed_channel(interaction.channel, self.configuration.discord['channel']):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
@@ -117,7 +117,7 @@ class Adm(commands.GroupCog):
     @app_commands.command(description='Manually refresh all ADM data.')
     async def refresh(self, interaction: discord.Interaction):
         """Command to manually refresh ADM data"""
-        if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
+        if not check_allowed_channel(interaction.channel, self.configuration.discord['channel']):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
@@ -129,7 +129,7 @@ class Adm(commands.GroupCog):
     @app_commands.describe(system_name='Which system to update ADM')
     async def update(self, interaction: discord.Interaction, system_name: str):
         """Command to manually update ADM for system"""
-        if not check_allowed_channel(interaction.channel, self.configuration.discord_channel):
+        if not check_allowed_channel(interaction.channel, self.configuration.discord['channel']):
             await interaction.response.send_message('Not allowed in this channel.', ephemeral=True)
             return
 
@@ -141,7 +141,8 @@ class Adm(commands.GroupCog):
         channels = text_channels_with_send_permission(self.bot)
 
         valid_channels = [
-            channel for channel in channels if channel.name == self.configuration.discord_channel]
+            channel for channel in channels if channel.name == self.configuration.discord['channel']
+        ]
 
         embed = discord.Embed(title=f'🦀 ADM Bot v{pydisadm.__version__}')
         embed.add_field(name='Summary', value='/adm summary')
@@ -160,7 +161,7 @@ class Adm(commands.GroupCog):
         """synchronize slash commands"""
 
         if self.configuration.discord_guild_id:
-            guild = discord.Object(id=self.configuration.discord_guild_id)
+            guild = discord.Object(id=self.configuration.discord['guild_id'])
             self.bot.tree.copy_global_to(guild=guild)
             await self.bot.tree.sync(guild=guild)
         else:
