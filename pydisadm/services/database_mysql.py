@@ -2,6 +2,9 @@
 from sqlalchemy import create_engine, text
 import pandas as pd
 
+from pydisadm.services.common import (
+    CREATE_TABLE_ADM, CREATE_TABLE_ADM_HISTORY, CREATE_TABLE_MAP
+)
 from pydisadm.services.database import Database
 
 class DatabaseMysql(Database):
@@ -14,36 +17,11 @@ class DatabaseMysql(Database):
     def setup(self):
         """Setup database schema"""
         with self.engine.connect() as conn:
-            conn.execute(text("""
-                            CREATE TABLE IF NOT EXISTS adm (
-                                id INTEGER PRIMARY KEY AUTO_INCREMENT, 
-                                system_id INTEGER NOT NULL, 
-                                adm REAL NOT NULL, 
-                                tier TEXT NOT NULL,
-                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                            )
-                        """))
-            
-            conn.execute(text("""
-                            CREATE TABLE IF NOT EXISTS adm_history (
-                                id INTEGER PRIMARY KEY AUTO_INCREMENT, 
-                                system_id INTEGER NOT NULL, 
-                                adm REAL NOT NULL, 
-                                tier TEXT NOT NULL,
-                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                            )
-                        """))
+            conn.execute(text(CREATE_TABLE_ADM))
 
-            conn.execute(text("""
-                            CREATE TABLE IF NOT EXISTS map (
-                                solarSystemID INTEGER PRIMARY KEY NOT NULL, 
-                                constellationID INTEGER NOT NULL, 
-                                regionID INTEGER NOT NULL, 
-                                solarSystemName TEXT NOT NULL,
-                                constellationName TEXT NOT NULL,
-                                regionName TEXT NOT NULL
-                            )
-                        """))
+            conn.execute(text(CREATE_TABLE_ADM_HISTORY))
+
+            conn.execute(text(CREATE_TABLE_MAP))
             conn.commit()
 
     def insert_systems(self, systems):

@@ -12,8 +12,7 @@ from pydisadm.configuration import Configuration
 from pydisadm.controller.adm_controller import AdmController
 from pydisadm.loader.static_data import update_static_data
 from pydisadm.runnable.runnable_refresh import run_auto_refresh
-from pydisadm.services.database_sqlite import DatabaseSqlite
-from pydisadm.services.database_mysql import DatabaseMysql
+from pydisadm.services.factory import create_database
 
 interrupt_event = threading.Event()
 
@@ -33,17 +32,14 @@ def main() -> int:
 
     configuration = Configuration()
 
-    if configuration.db_service == 'sqlite':
-        database = DatabaseSqlite(configuration.db_connection_string)
-    elif configuration.db_service == 'mysql':
-        database = DatabaseMysql(configuration.db_connection_string)
+    database = create_database(configuration)
 
     update_static_data(database)
 
     controller = AdmController(configuration, database)
 
     controller.update_adm_data()
-    controller.purge_adm_records(configuration.db_keep_adm_days)
+    controller.purge_adm_records(configuration.database['keep_adm_days'])
 
     bot = AdmBot(configuration, controller)
     bot.setup_cogs()

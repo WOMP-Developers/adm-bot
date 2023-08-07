@@ -27,17 +27,17 @@ def test_empty_configuration():
 
     sut = Configuration()
 
-    assert sut.alliance_id is None, "alliance_id is expected to be None"
-    assert sut.discord_app_id is None, "discord_app_id is expected to be None"
-    assert sut.discord_channel is None, "discord_channel is expected to be None"
-    assert sut.discord_token is None, "discord_token is expected to be None"
+    assert sut.alliance['id'] is None, "alliance_id is expected to be None"
+    assert sut.discord['app_id'] is None, "discord_app_id is expected to be None"
+    assert sut.discord['channel'] is None, "discord_channel is expected to be None"
+    assert sut.discord['token'] is None, "discord_token is expected to be None"
 
 def test_alliance_id_number(mock_env_alliance_id):
     """Test assigning number to alliance_id"""
 
     sut = Configuration()
 
-    assert sut.alliance_id == 99999, "alliance_id is not matching expected value"
+    assert sut.alliance['id'] == 99999, "alliance_id is not matching expected value"
 
 
 def test_discord_app_id(mock_env_discord_app_id):
@@ -45,7 +45,7 @@ def test_discord_app_id(mock_env_discord_app_id):
 
     sut = Configuration()
 
-    assert sut.discord_app_id == 'ABC', "discord_app_id is not matching expected value"
+    assert sut.discord['app_id'] == 'ABC', "discord_app_id is not matching expected value"
 
 
 def test_discord_token(mock_env_discord_token):
@@ -53,7 +53,7 @@ def test_discord_token(mock_env_discord_token):
 
     sut = Configuration()
 
-    assert sut.discord_token == 'DEF', "discord_token is not matching expected value"
+    assert sut.discord['token'] == 'DEF', "discord_token is not matching expected value"
 
 
 def test_discord_channel(mock_env_discord_channel):
@@ -61,7 +61,7 @@ def test_discord_channel(mock_env_discord_channel):
 
     sut = Configuration()
 
-    assert sut.discord_channel == 'GHJ', "discord_channel is not matching expected value"
+    assert sut.discord['channel'] == 'GHJ', "discord_channel is not matching expected value"
 
 
 def test_alliance_id_number_invalid(mock_env_alliance_id_invalid):

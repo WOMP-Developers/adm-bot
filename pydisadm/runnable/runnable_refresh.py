@@ -4,8 +4,7 @@ import schedule
 
 from pydisadm.configuration import Configuration
 from pydisadm.controller.adm_controller import AdmController
-from pydisadm.services.database_sqlite import DatabaseSqlite
-from pydisadm.services.database_mysql import DatabaseMysql
+from pydisadm.services.factory import create_database
 from pydisadm.utils.thread_utils import run_threaded
 
 logger = logging.getLogger('adm_auto_refresh')
@@ -14,10 +13,7 @@ def scheduler_loop(interrupt_event):
     """Scheduler main loop"""
     configuration = Configuration()
 
-    if configuration.db_service == 'sqlite':
-        database = DatabaseSqlite(configuration.db_connection_string)
-    elif configuration.db_service == 'mysql':
-        database = DatabaseMysql(configuration.db_connection_string)
+    database = create_database(configuration)
 
     controller = AdmController(configuration, database)
 

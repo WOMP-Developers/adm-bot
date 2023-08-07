@@ -8,30 +8,41 @@ class Configuration:
     DB_SERVICES = ['sqlite', 'mysql']
 
     def __init__(self):
-        self.discord_token = os.getenv('DISCORD_TOKEN')
-        self.discord_channel = os.getenv('DISCORD_CHANNEL')
-        self.discord_app_id = os.getenv('DISCORD_APP_ID')
-        self.discord_guild_id = os.getenv('DISCORD_GUILD_ID')
-        self.db_service = os.getenv('DB_SERVICE', 'sqlite')
 
-        if self.db_service not in Configuration.DB_SERVICES:
-            raise ValueError(f'[configuration] unsupported `DB_SERVICE`: {self.db_service}')
+        self.discord = {
+            'token': os.getenv('DISCORD_TOKEN'),
+            'channel': os.getenv('DISCORD_CHANNEL'),
+            'app_id': os.getenv('DISCORD_APP_ID'),
+            'guild_id': os.getenv('DISCORD_GUILD_ID')
+        }
 
-        self.db_connection_string = os.getenv('DB_CONNECTION_STRING')
+        self.database = {
+            'service': os.getenv('DB_SERVICE', 'sqlite'),
+            'connection_string': os.getenv('DB_CONNECTION_STRING'),
+            'keep_adm_days': os.getenv('DB_KEEP_ADM_DAYS', '7')
+        }
 
-        alliance_id = os.getenv('ALLIANCE_ID')
+        if self.database['service'] not in Configuration.DB_SERVICES:
+            raise ValueError(
+                f'[configuration] unsupported `DB_SERVICE`: {self.database["service"]}'
+            )
 
-        db_keep_adm_days = os.getenv('DB_KEEP_ADM_DAYS', '7')
-        if db_keep_adm_days is not None:
+        self.alliance = {
+            'id': os.getenv('ALLIANCE_ID')
+        }
+
+        keep_adm_days = self.database['keep_adm_days']
+        if keep_adm_days is not None:
             try:
-                db_keep_adm_days = int(db_keep_adm_days)
+                keep_adm_days = int(keep_adm_days)
             except ValueError as error:
                 raise ValueError(
                     '[configuration] invalid `DB_KEEP_ADM_DAYS` value',
-                    db_keep_adm_days) from error
+                    keep_adm_days) from error
 
-        self.db_keep_adm_days = db_keep_adm_days
+        self.database['keep_adm_days'] = keep_adm_days
 
+        alliance_id = self.alliance['id']
         if alliance_id is not None:
             try:
                 alliance_id = int(alliance_id)
@@ -40,15 +51,19 @@ class Configuration:
                     '[configuration] invalid `ALLIANCE_ID` value',
                     alliance_id) from error
 
-        self.alliance_id = alliance_id
+        self.alliance['id'] = alliance_id
+
+    def pretty_print(self):
+        """Create printable string from configuration"""
+        return (f'{self.__class__.__name__}' +
+            f'(discord_token={self.discord["token"]}, ' +
+            f'discord_channel={self.discord["channel"]}, ' +
+            f'discord_app_id={self.discord["app_id"]}, ' +
+            f'discord_guild_id={self.discord["guild_id"]}, ' +
+            f'alliance_id={self.alliance["id"]}, ' +
+            f'db_keep_adm_days={self.database["keep_adm_days"]}, ' +
+            f'db_service={self.database["service"]}, ' +
+            f'db_connection_string={self.database["connection_string"]})')
 
     def __str__(self):
-        return (f'{self.__class__.__name__}' +
-            f'(discord_token={self.discord_token}, ' +
-            f'discord_channel={self.discord_channel}, ' +
-            f'discord_app_id={self.discord_app_id}, ' +
-            f'discord_guild_id={self.discord_guild_id}, ' +
-            f'alliance_id={self.alliance_id}, ' +
-            f'db_keep_adm_days={self.db_keep_adm_days}, ' +
-            f'db_service={self.db_service}, ' +
-            f'db_connection_string={self.db_connection_string})')
+        return self.pretty_print()
