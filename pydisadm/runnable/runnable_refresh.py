@@ -31,7 +31,7 @@ def refresh_job(controller: AdmController, configuration: Configuration):
     logger.info('adm data update finished')
 
     logger.info('purge old adm data...')
-    controller.purge_adm_records(configuration.db_keep_adm_days)
+    controller.purge_adm_records(configuration.database['keep_adm_days'])
     logger.info('purge finished')
 
 def run_auto_refresh(interrupt_event):

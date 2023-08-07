@@ -200,7 +200,7 @@ class AdmController:
 
     def update_adm_data(self):
         """Update ADM data"""
-        alliance_id = self.configuration.alliance_id
+        alliance_id = self.configuration.alliance['id']
         system_adms = self.get_system_adms(alliance_id)
 
         self.database.insert_systems(system_adms)

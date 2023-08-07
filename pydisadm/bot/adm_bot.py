@@ -23,7 +23,7 @@ class AdmBot:
 
         intents = create_intents()
         self.bot = commands.Bot(
-            application_id=configuration.discord_app_id,
+            application_id=configuration.discord['app_id'],
             command_prefix='!',
             intents=intents,
             help_command=None
@@ -47,4 +47,4 @@ class AdmBot:
 
     def run(self):
         """Run the bot, this function is blocking"""
-        self.bot.run(self.configuration.discord_token)
+        self.bot.run(self.configuration.discord['token'])
