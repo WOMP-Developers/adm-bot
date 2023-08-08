@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.0 (2023-08-08)
+### Feature
+* Add option to ignore TCU when collecting adm ([`2c0a414`](https://github.com/agelito/adm-bot/commit/2c0a4142797bc09501acefc5fd9b186c2b4051e0))
+
+### Fix
+* Query compatibility with sqlite ([`53b20c9`](https://github.com/agelito/adm-bot/commit/53b20c99ad58cdc3b595ab15f041a9feb7fd0738))
+
 ## v2.0.0 (2023-08-07)
 ### Feature
 * Add support for mysql database ([#25](https://github.com/agelito/adm-bot/issues/25)) ([`8e42139`](https://github.com/agelito/adm-bot/commit/8e42139e431b1264f8494cb55cd171ebb4767c69))
