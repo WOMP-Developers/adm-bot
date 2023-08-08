@@ -28,7 +28,8 @@ class Configuration:
             )
 
         self.alliance = {
-            'id': os.getenv('ALLIANCE_ID')
+            'id': os.getenv('ALLIANCE_ID'),
+            'ignore_tcu': os.getenv('ALLIANCE_IGNORE_TCU')
         }
 
         keep_adm_days = self.database['keep_adm_days']
@@ -61,6 +62,7 @@ class Configuration:
             f'discord_app_id={self.discord["app_id"]}, ' +
             f'discord_guild_id={self.discord["guild_id"]}, ' +
             f'alliance_id={self.alliance["id"]}, ' +
+            f'alliance_ignore_tcu={self.alliance["ignore_tcu"]}, ' +
             f'db_keep_adm_days={self.database["keep_adm_days"]}, ' +
             f'db_service={self.database["service"]}, ' +
             f'db_connection_string={self.database["connection_string"]})')

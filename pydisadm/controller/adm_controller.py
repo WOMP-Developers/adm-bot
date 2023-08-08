@@ -127,9 +127,12 @@ class AdmController:
 
         return system_adm
 
-    def get_alliance_structures(self, structures, alliance_id):
+    def get_alliance_structures(self, structures, alliance_id, ignore_tcu):
         """Retrieve a list of alliance sovreignty structures"""
         structure_data = pd.DataFrame.from_dict(structures)
+
+        if ignore_tcu:
+            structure_data = structure_data[structure_data['structure_type_id'] != 32226]
 
         drop_columns = [
             'structure_id',
@@ -173,10 +176,10 @@ class AdmController:
 
         return (True, insert_systems['adm'][0])
 
-    def get_system_adms(self, alliance_id):
+    def get_system_adms(self, alliance_id, ignore_tcu):
         """Retrieve ADM for systems controlled by alliance"""
         structures = sovereignty_structures()
-        system_adms = self.get_alliance_structures(structures, alliance_id)
+        system_adms = self.get_alliance_structures(structures, alliance_id, ignore_tcu)
 
         system_adms.drop_duplicates(inplace=True)
 
@@ -201,7 +204,8 @@ class AdmController:
     def update_adm_data(self):
         """Update ADM data"""
         alliance_id = self.configuration.alliance['id']
-        system_adms = self.get_system_adms(alliance_id)
+        ignore_tcu = self.configuration.alliance['ignore_tcu']
+        system_adms = self.get_system_adms(alliance_id, ignore_tcu)
 
         self.database.insert_systems(system_adms)
 
