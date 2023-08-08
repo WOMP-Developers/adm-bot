@@ -18,8 +18,8 @@ class DatabaseSqlite(Database):
     def setup(self):
         """Setup database schema"""
         cur = self.conn.cursor()
-        cur.execute(CREATE_TABLE_ADM)
-        cur.execute(CREATE_TABLE_MAP)
+        cur.execute(CREATE_TABLE_ADM.replace('AUTO_INCREMENT', 'AUTOINCREMENT'))
+        cur.execute(CREATE_TABLE_MAP.replace('AUTO_INCREMENT', 'AUTOINCREMENT'))
         self.conn.commit()
 
     def insert_systems(self, systems):
