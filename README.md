@@ -69,6 +69,7 @@ Configuration is done using environment variables or `dotenv`. See `.env.example
 - `DISCORD_GUILD_ID` - the discord server bot should be part of
 - `DISCORD_APP_ID` - the bot application ID
 - `ALLIANCE_ID` - the alliance ID for collecting ADM values, only systems owned by this alliance will be collected.
+- `ALLIANCE_IGNORE_TCU` - set to any value to ignore TCU's when collecting ADM values
 - `DB_SERVICE` - which database to use, can be: sqlite or mysql
 - `DB_CONNECTION_STRING` - the connection string
 - `DB_KEEP_ADM_DAYS` - how many days adm history should be kept in database (default 7).
