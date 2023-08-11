@@ -160,7 +160,7 @@ class Adm(commands.GroupCog):
     async def adm_sync_commands(self, ctx: Context):
         """synchronize slash commands"""
 
-        if self.configuration.discord_guild_id:
+        if self.configuration.discord['guild_id']:
             guild = discord.Object(id=self.configuration.discord['guild_id'])
             self.bot.tree.copy_global_to(guild=guild)
             await self.bot.tree.sync(guild=guild)
