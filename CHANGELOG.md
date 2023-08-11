@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.1 (2023-08-11)
+### Fix
+* Issue reading guild_id during commands sync ([`e9f035e`](https://github.com/agelito/adm-bot/commit/e9f035eb855b660150f59adda83c233291ca0904))
+
 ## v2.1.0 (2023-08-08)
 ### Feature
 * Add option to ignore TCU when collecting adm ([`2c0a414`](https://github.com/agelito/adm-bot/commit/2c0a4142797bc09501acefc5fd9b186c2b4051e0))
