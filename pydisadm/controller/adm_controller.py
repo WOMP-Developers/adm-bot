@@ -58,7 +58,12 @@ class AdmController:
 
         generated_at = self.database.select_most_recent_row()
 
-        return (table, str(generated_at['created_at'][0]))
+        if not generated_at.empty:
+            generated_time = str(generated_at['created_at'][0])
+        else:
+            generated_time = None
+
+        return (table, generated_time)
 
     def create_history_graph(self, name, file_name):
         """Generate an ADM history graph and save to file"""
@@ -199,7 +204,10 @@ class AdmController:
         systems = self.database.select_systems()
         systems.sort_values(by='adm', inplace=True, ascending=True)
 
-        return systems.iloc[0]
+        if not systems.empty:
+            return systems.iloc[0]
+        else:
+            return None
 
     def update_adm_data(self):
         """Update ADM data"""

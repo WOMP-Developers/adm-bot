@@ -24,6 +24,10 @@ class Adm(commands.GroupCog):
         await interaction.response.defer(thinking=True)
 
         (tier_list, generated_at) = self.controller.generate_tier_list()
+        if generated_at is None:
+            await interaction.followup.send('😥 No ADM data...')
+            return
+
         timestamp = convert_to_local_timestamp(generated_at)
 
         file_name = "adm_tier_list.txt"
@@ -50,7 +54,7 @@ class Adm(commands.GroupCog):
             )
             self.controller.delete_file(file_name)
         else:
-            await interaction.followup.send("No data (╯°□°）╯︵ ┻━┻")
+            await interaction.followup.send('😥 No ADM data...')
 
     async def update_adm(self, interaction: discord.Interaction, system_name: str, adm: float):
         """Update ADM for system"""
@@ -75,6 +79,9 @@ class Adm(commands.GroupCog):
         await interaction.response.defer()
 
         recommended_system = self.controller.get_recommended_system()
+        if recommended_system is None:
+            await interaction.followup.send('😥 No ADM data...')
+            return
 
         system = recommended_system['solarSystemName']
         region = recommended_system['regionName']
