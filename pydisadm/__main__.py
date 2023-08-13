@@ -14,21 +14,20 @@ from pydisadm.loader.static_data import update_static_data
 from pydisadm.runnable.runnable_refresh import run_auto_refresh
 from pydisadm.services.factory import create_database
 
-interrupt_event = threading.Event()
-
-def _signal_handler(_1, _2):
-    print('Interrupted by CTRL+C')
-    interrupt_event.set()
-    sys.exit(0)
-
-
 def main() -> int:
     """Application main entrypoint"""
     load_dotenv(verbose=True)
 
-    signal.signal(signal.SIGINT, _signal_handler)
+    interrupt_event = threading.Event()
 
-    run_auto_refresh(interrupt_event)
+    def _signal_handler(sig, _2):
+        print(f'Interrupted by signal: {sig}')
+        interrupt_event.set()
+
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, _signal_handler)
+    signal.signal(signal.SIGTERM, _signal_handler)
 
     configuration = Configuration()
 
@@ -40,6 +39,8 @@ def main() -> int:
 
     controller.update_adm_data()
     controller.purge_adm_records(configuration.database['keep_adm_days'])
+
+    run_auto_refresh(interrupt_event)
 
     bot = AdmBot(configuration, controller)
     bot.setup_cogs()
