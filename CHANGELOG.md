@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.2 (2023-08-13)
+### Fix
+* Interrupt the application on SIGTERM signal ([`0c67818`](https://github.com/agelito/adm-bot/commit/0c678181c6a3b9cd6194b3e460de32b420f752f1))
+* Respond to commands even if there's no data ([`abe2ca1`](https://github.com/agelito/adm-bot/commit/abe2ca1fa6535f9eebda0d0657b49473b33c05e9))
+
 ## v2.1.1 (2023-08-11)
 ### Fix
 * Issue reading guild_id during commands sync ([`e9f035e`](https://github.com/agelito/adm-bot/commit/e9f035eb855b660150f59adda83c233291ca0904))
