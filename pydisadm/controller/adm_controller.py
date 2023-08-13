@@ -206,8 +206,8 @@ class AdmController:
 
         if not systems.empty:
             return systems.iloc[0]
-        else:
-            return None
+
+        return None
 
     def update_adm_data(self):
         """Update ADM data"""
