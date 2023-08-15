@@ -11,16 +11,14 @@ class DatabaseMysql(Database):
     """Mysql database service implementation"""
 
     def __init__(self, conn_string):
-        self.engine = create_engine(f'mysql+mysqldb://{conn_string}')
+        self.engine = create_engine(f'mysql+mysqldb://{conn_string}', pool_size=5)
         self.setup()
 
     def setup(self):
         """Setup database schema"""
         with self.engine.connect() as conn:
             conn.execute(text(CREATE_TABLE_ADM))
-
             conn.execute(text(CREATE_TABLE_ADM_HISTORY))
-
             conn.execute(text(CREATE_TABLE_MAP))
             conn.commit()
 
