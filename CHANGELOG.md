@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.3 (2023-08-15)
+### Fix
+* Rollback mysql on OperationalError ([`497fd26`](https://github.com/agelito/adm-bot/commit/497fd2675c57ddc3d5e7d5b904b082c8083348c9))
+* Set connnection pool size to 5 ([`1e85870`](https://github.com/agelito/adm-bot/commit/1e8587047a5e3a6a1fc3ba85b3615f1a02551e69))
+
 ## v2.1.2 (2023-08-13)
 ### Fix
 * Interrupt the application on SIGTERM signal ([`0c67818`](https://github.com/agelito/adm-bot/commit/0c678181c6a3b9cd6194b3e460de32b420f752f1))
