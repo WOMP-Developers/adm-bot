@@ -12,4 +12,4 @@ def adm_from_index(military: int, industrial: int, strategic: int) -> float:
         strategic_values[strategic]
     ])
 
-    return min(6.0, 1.0 + adm_sum)
+    return round(min(6.0, 1.0 + adm_sum), 2)

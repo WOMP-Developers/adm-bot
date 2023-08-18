@@ -7,7 +7,8 @@ from pydisadm.utils.adm_utils import adm_from_index
             (0, 0, 0, 1),
             (1, 0, 0, 1.6),
             (4, 0, 4, 4.0),
-            (5, 5, 5, 6.0)
+            (5, 5, 5, 6.0),
+            (5, 2, 1, 5.1)
         ]
 )
 
