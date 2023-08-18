@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.4 (2023-08-18)
+### Fix
+* Round adm sum ([`c100a27`](https://github.com/agelito/adm-bot/commit/c100a2771f15580dfd1cbae3e79c49aff448d2a9))
+
+### Documentation
+* Add email address to authors field ([`7ebe781`](https://github.com/agelito/adm-bot/commit/7ebe781ea88ee41ecbe532754fe9f80e8440d8e0))
+
 ## v2.1.3 (2023-08-15)
 ### Fix
 * Rollback mysql on OperationalError ([`497fd26`](https://github.com/agelito/adm-bot/commit/497fd2675c57ddc3d5e7d5b904b082c8083348c9))
