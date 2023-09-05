@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.2.0 (2023-09-05)
+### Feature
+* Improve database connection error management ([`b292faa`](https://github.com/agelito/adm-bot/commit/b292faaae35e4baba77465aa5b6aab8ec40cb988))
+
 ## v2.1.4 (2023-08-18)
 ### Fix
 * Round adm sum ([`c100a27`](https://github.com/agelito/adm-bot/commit/c100a2771f15580dfd1cbae3e79c49aff448d2a9))
