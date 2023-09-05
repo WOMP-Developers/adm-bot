@@ -9,13 +9,44 @@ from pydisadm.services.common import (
 )
 from pydisadm.services.database import Database
 
-logger = logging.getLogger('database_mysql')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+logger.addHandler(ch)
+
+POOL_RECYCLE_SECONDS=60*10
+RETRIES=3
+
+def query_retry(retries, exceptions):
+    """Retry queries in case of failure."""
+    def _inner_func(func):
+        def _retry_wrapper(*args, **kwargs):
+            attempt = 0
+            while attempt < retries:
+                try:
+                    return func(*args, **kwargs)
+                except exceptions as exc:
+                    logger.error('error %s on attempt %d of %d', exc, attempt + 1, retries)
+                    attempt += 1
+
+            return func(*args, **kwargs)
+        return _retry_wrapper
+    return _inner_func
 
 class DatabaseMysql(Database):
     """Mysql database service implementation"""
 
     def __init__(self, conn_string):
-        self.engine = create_engine(f'mysql+mysqldb://{conn_string}', pool_size=5, echo_pool=True)
+        self.engine = create_engine(
+            f'mysql+mysqldb://{conn_string}',
+            pool_size=5,
+            pool_pre_ping=True,
+            pool_recycle=POOL_RECYCLE_SECONDS,
+            echo_pool=True
+        )
         self.setup()
 
     def setup(self):
@@ -26,6 +57,7 @@ class DatabaseMysql(Database):
             conn.execute(text(CREATE_TABLE_MAP))
             conn.commit()
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def insert_systems(self, systems):
         """Insert system ADM records"""
         with self.engine.connect() as conn:
@@ -37,6 +69,7 @@ class DatabaseMysql(Database):
                 conn.rollback()
                 raise error
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def insert_map_data(self, map_data):
         """Insert map data"""
         with self.engine.connect() as conn:
@@ -47,6 +80,7 @@ class DatabaseMysql(Database):
                 conn.rollback()
                 raise error
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def select_system_with_name(self, system_name) -> pd.DataFrame:
         """Select system matching name"""
         with self.engine.connect() as conn:
@@ -61,6 +95,7 @@ class DatabaseMysql(Database):
 
         return system
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def select_most_recent_row(self) -> pd.DataFrame:
         """Select the most recent ADM record"""
         with self.engine.connect() as conn:
@@ -75,6 +110,7 @@ class DatabaseMysql(Database):
 
         return most_recent
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def select_systems(self) -> pd.DataFrame:
         """Select most recent record of all systems"""
 
@@ -92,6 +128,7 @@ class DatabaseMysql(Database):
 
         return systems
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def select_system_by_name(self, name) -> pd.DataFrame:
         """Select systems by name"""
         sql = text("""
@@ -112,6 +149,7 @@ class DatabaseMysql(Database):
 
         return system
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def select_system_history(self, system, limit) -> pd.DataFrame:
         """Select history of a single system"""
 
@@ -129,6 +167,7 @@ class DatabaseMysql(Database):
 
         return system_history
 
+    @query_retry(retries=RETRIES, exceptions=(OperationalError,))
     def delete_system_rows(self, days_old):
         """Delete system rows older than days_old"""
 
